@@ -1,0 +1,38 @@
+<center>
+	{% extends 'myapp/layout.html' %}
+
+
+	{% block title %}{% endblock %}
+
+
+{% block content %}
+
+	<style type="text/css">
+    hr{
+			background-color: red;
+			height: 2px;
+		}
+</style>
+	<h1>Customer Page</h1>
+	<h2>In this page, you can only view added items</h2>
+	<span>Hello, {{ request.user }}</span>
+	<span><a href="{% url 'logout' %}">Logout</a></span><br><br>
+
+	{% for item in items %}
+	{% if item.picture %}
+		<img src="{{ item.picture.url }}" style="width: 100px;"><br><br>
+	{% else %}
+		<span class="text-muted">No Picture</span><br><br>
+	{% endif %}
+	Title: {{ item.title }}<br><br>
+	Height: {{ item.height }}<br><br>
+	Width: {{ item.width }}<br><br>
+	Manufacturing Country: {{ item.manufacturingcountry }}<br><br>
+	Description: {{ item.description }}<br><br>
+	Price: {{ item.price }}<br><br>
+
+	<hr>
+
+{% endfor %}
+{% endblock %}
+</center>

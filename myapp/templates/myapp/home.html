@@ -1,0 +1,71 @@
+<center>
+	{% extends 'myapp/layout.html' %}
+
+
+	{% block title %}{% endblock %}
+
+
+{% block content %}
+
+	<style type="text/css">
+    hr{
+			background-color: red;
+			height: 2px;
+		}
+</style>
+	<h1>Admin Page</h1>
+	<h2>In this admin page, you can add items and remove them</h2>
+	<span>Hello, {{ request.user }}</span>
+	<span><a href="{% url 'logout' %}">Logout</a></span><br><br>
+
+	
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		{{ form.title.label }}:
+		{{ form.title }}
+
+		<br><br>{{ form.picture.label }}:
+		{{ form.picture }}
+
+		<br><br>{{ form.height.label }}:
+		{{ form.height }}
+
+		<br><br>{{ form.width.label }}:
+		{{ form.width }}
+
+		<br><br>Manufacturing Country: 
+		{{ form.manufacturingcountry }}
+
+		<br><br>{{ form.description.label }}:
+		{{ form.description }}
+
+		<br><br>Price:
+		{{ form.price }}
+
+		<br><br><button type="submit">Upload Item</button>
+	</form><br><br><hr>
+
+	{% for item in items %}
+	{% if item.picture %}
+		<img src="{{ item.picture.url }}" style="width: 100px;"><br><br>
+	{% else %}
+		<span class="text-muted">No Picture</span><br><br>
+	{% endif %}
+	Title: {{ item.title }}<br><br>
+	Height: {{ item.height }}<br><br>
+	Width: {{ item.width }}<br><br>
+	Manufacturing Country: {{ item.manufacturingcountry }}<br><br>
+	Description: {{ item.description }}<br><br>
+	Price: {{ item.price }}<br><br>
+	<form method="post" action="{% url 'delete_Item' item.pk %}">
+		{% csrf_token %}
+		<button type="submit" >Delete</button>
+		
+	</form>
+
+	<hr>
+
+{% endfor %}
+{% endblock %}
+</center>
